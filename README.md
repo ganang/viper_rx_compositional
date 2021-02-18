@@ -1,5 +1,5 @@
 # viper_rx_compositional
 
-- VIPER with Compositional Layout
+- VIPER with CollectionView Compositional Layout
 
 RXSWIFT Soon
