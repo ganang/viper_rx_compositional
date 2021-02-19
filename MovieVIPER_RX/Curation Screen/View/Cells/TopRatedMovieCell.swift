@@ -44,7 +44,7 @@ class TopRatedMovieCell: BaseCell {
 
 extension TopRatedMovieCell {
     func configure() {
-        let data = try? Data(contentsOf: posterURL!) //make sure your image in this url does exist, otherwise unwrap in a if let check / try-catch
-        coverImageView.image = UIImage(data: data!)
+        let url = posterURL
+        coverImageView.kf.setImage(with: url)
     }
 }
