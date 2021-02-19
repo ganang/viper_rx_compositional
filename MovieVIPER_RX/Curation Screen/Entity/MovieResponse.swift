@@ -37,11 +37,11 @@ struct Movie: Codable, Hashable {
     }
     
     func hash(into hasher: inout Hasher) {
-      hasher.combine(id)
+        hasher.combine(id)
     }
-
+    
     static func == (lhs: Movie, rhs: Movie) -> Bool {
-      return lhs.id == rhs.id
+        return lhs.id == rhs.id
     }
     
 }

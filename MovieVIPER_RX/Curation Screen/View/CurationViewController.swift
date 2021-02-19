@@ -36,9 +36,9 @@ class CurationViewController: UIViewController {
         
         setupDepedency()
         setupViews()
+        setupServices()
         configureCollectionView()
         configureDataSource()
-        setupServices()
     }
     
     func setupDepedency() {
@@ -66,7 +66,7 @@ extension CurationViewController {
     
     func getTopRatedMovies() {
         let params = [
-            "page": "\(page)",
+            "page": "2",
             "language": "en-US"
         ] as [String: Any]
         
@@ -75,7 +75,7 @@ extension CurationViewController {
     
     func getNowPlayingMovies() {
         let params = [
-            "page": "\(page)",
+            "page": "3",
             "language": "en-US"
         ] as [String: Any]
         
@@ -180,6 +180,7 @@ extension CurationViewController {
                         withReuseIdentifier: PopularMovieCell.reuseIdentifer,
                         for: indexPath) as? PopularMovieCell else { fatalError("Could not create new cell") }
                 cell.backgroundColor = .gray
+                cell.posterURL = self.popularMovies[indexPath.row].posterURL
                 
                 return cell
                 
@@ -188,6 +189,7 @@ extension CurationViewController {
                         withReuseIdentifier: TopRatedMovieCell.reuseIdentifer,
                         for: indexPath) as? TopRatedMovieCell else { fatalError("Could not create new cell") }
                 cell.backgroundColor = .gray
+                cell.posterURL = self.topRatedMovies[indexPath.row].posterURL
                 
                 return cell
                 
@@ -196,6 +198,7 @@ extension CurationViewController {
                         withReuseIdentifier: NowPlayingMovieCell.reuseIdentifer,
                         for: indexPath) as? NowPlayingMovieCell else { fatalError("Could not create new cell") }
                 cell.backgroundColor = .gray
+                cell.posterURL = self.nowPlayingMovies[indexPath.row].posterURL
                 
                 return cell
                 
