@@ -8,7 +8,7 @@
 import UIKit
 
 public class MovieProvider: MovieService {
-    
+   
     public static let shared = MovieProvider()
     private init() {}
     
@@ -36,6 +36,14 @@ public class MovieProvider: MovieService {
     
     func getNowPlayingMovies(endpoint: MovieEndPoint, params: [String : Any]?, onSuccess: @escaping (MovieResponse) -> Void, onError: @escaping (Error) -> Void) {
         self.handleRequest(requestedObjectType: MovieResponse.self, method: "GET", endpoint: "/movie/\(endpoint.rawValue)", params: params, onSuccess: onSuccess, onError: onError)
+    }
+    
+    func getMovieDetail(id: Int, params: [String : Any]?, onSuccess: @escaping (MovieDetailResponse) -> Void, onError: @escaping (Error) -> Void) {
+        self.handleRequest(requestedObjectType: MovieDetailResponse.self, method: "GET", endpoint: "/movie/\(id)", params: params, onSuccess: onSuccess, onError: onError)
+    }
+    
+    func getMovieReview(id: Int, params: [String : Any]?, onSuccess: @escaping (ReviewResponse) -> Void, onError: @escaping (Error) -> Void) {
+        self.handleRequest(requestedObjectType: ReviewResponse.self, method: "GET", endpoint: "/movie/\(id)/reviews", params: params, onSuccess: onSuccess, onError: onError)
     }
     
     // function for handling api Request with generic type, so it can always be used later

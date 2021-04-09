@@ -87,7 +87,7 @@ extension CurationViewController {
 extension CurationViewController: CurationViewControllerProtocol {
     
     func displayPopularMoviesSuccess(withResponse response: MovieResponse) {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+        DispatchQueue.main.async {
             self.popularMovies = response.results
             
             self.snapshot.appendSections([Section.popularMovies])
@@ -102,7 +102,7 @@ extension CurationViewController: CurationViewControllerProtocol {
     }
     
     func displayTopRatedMoviesSuccess(withResponse response: MovieResponse) {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+        DispatchQueue.main.async {
             self.topRatedMovies = response.results
             
             self.snapshot.appendSections([Section.topRatedMovies])
@@ -117,7 +117,7 @@ extension CurationViewController: CurationViewControllerProtocol {
     }
     
     func displayNowPlayingMoviesSuccess(withResponse response: MovieResponse) {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+        DispatchQueue.main.async {
             self.nowPlayingMovies = response.results
             
             self.snapshot.appendSections([Section.nowPlayingMovies])
@@ -179,8 +179,11 @@ extension CurationViewController {
                 guard let cell = collectionView.dequeueReusableCell(
                         withReuseIdentifier: PopularMovieCell.reuseIdentifer,
                         for: indexPath) as? PopularMovieCell else { fatalError("Could not create new cell") }
-                cell.backgroundColor = .gray
-                cell.posterURL = self.popularMovies[indexPath.row].posterURL
+                cell.backgroundColor = .lightGray
+                
+                if self.popularMovies.count != 0 {
+                    cell.posterURL = self.popularMovies[indexPath.row].posterURL
+                }
                 
                 return cell
                 
@@ -188,8 +191,11 @@ extension CurationViewController {
                 guard let cell = collectionView.dequeueReusableCell(
                         withReuseIdentifier: TopRatedMovieCell.reuseIdentifer,
                         for: indexPath) as? TopRatedMovieCell else { fatalError("Could not create new cell") }
-                cell.backgroundColor = .gray
-                cell.posterURL = self.topRatedMovies[indexPath.row].posterURL
+                cell.backgroundColor = .lightGray
+                
+                if self.topRatedMovies.count != 0 {
+                    cell.posterURL = self.topRatedMovies[indexPath.row].posterURL
+                }
                 
                 return cell
                 
@@ -197,8 +203,11 @@ extension CurationViewController {
                 guard let cell = collectionView.dequeueReusableCell(
                         withReuseIdentifier: NowPlayingMovieCell.reuseIdentifer,
                         for: indexPath) as? NowPlayingMovieCell else { fatalError("Could not create new cell") }
-                cell.backgroundColor = .gray
-                cell.posterURL = self.nowPlayingMovies[indexPath.row].posterURL
+                
+                cell.backgroundColor = .lightGray
+                if self.nowPlayingMovies.count != 0 {
+                    cell.posterURL = self.nowPlayingMovies[indexPath.row].posterURL
+                }
                 
                 return cell
                 
@@ -340,6 +349,20 @@ extension CurationViewController {
 
 extension CurationViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let section = indexPath.section
+        let row = indexPath.row
+        var id = 0
         
+        if section == 0 {
+            id = self.popularMovies[row].id
+        } else if section == 1 {
+            id = self.topRatedMovies[row].id
+        } else {
+            id = self.nowPlayingMovies[row].id
+        }
+        
+        let movieDetailVC = MovieDetailViewController()
+        movieDetailVC.id = id
+        self.navigationController?.pushViewController(movieDetailVC, animated: true)
     }
 }

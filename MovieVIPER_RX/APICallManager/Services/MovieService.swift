@@ -9,9 +9,16 @@ import UIKit
 
 protocol MovieService {
     
+    // get popular movie
     func getPopularMovies(endpoint: MovieEndPoint , params: [String: Any]?, onSuccess: @escaping (_ response: MovieResponse) -> Void, onError: @escaping(_ error: Error) -> Void)
+    // get top rated movie
     func getTopRatedMovies(endpoint: MovieEndPoint , params: [String: Any]?, onSuccess: @escaping (_ response: MovieResponse) -> Void, onError: @escaping(_ error: Error) -> Void)
+    // get now playing movie
     func getNowPlayingMovies(endpoint: MovieEndPoint , params: [String: Any]?, onSuccess: @escaping (_ response: MovieResponse) -> Void, onError: @escaping(_ error: Error) -> Void)
+    // get movie detail
+    func getMovieDetail(id: Int , params: [String: Any]?, onSuccess: @escaping (_ response: MovieDetailResponse) -> Void, onError: @escaping(_ error: Error) -> Void)
+    // get movie review
+    func getMovieReview(id: Int , params: [String: Any]?, onSuccess: @escaping (_ response: ReviewResponse) -> Void, onError: @escaping(_ error: Error) -> Void)
 }
 
 public enum MovieEndPoint: String, CaseIterable, Identifiable {
